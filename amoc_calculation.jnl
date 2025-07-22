@@ -1,0 +1,24 @@
+can data/all
+
+!!!!!!!! Contributed by Dr. Sandeep Narayanasetti !!!!!!!!!
+!!!!!!!!!!!!!!!!This Script can be used for calculating Meridional Overturning Circulation Across any Basin!!!
+!!!!!!!!!!!!!!!!!Below Sample is for Atlantic (AMOC)!!
+
+
+use "/iitm4/cccr/cmip6/Sandeep/NEW_AMOC_COMP/regionmask_v6.nc" !!! Make a mask from your model grid-spec file (works for MOM)
+
+let one=tmask[d=1]/tmask[d=1]
+
+let tmask_atl = if (( tmask[d=1] EQ 2 OR tmask[d=1] EQ 4)) then one else one-11 !! For Atlantic
+
+set variable/bad=-10. tmask_atl
+
+use "/iitm4/cccr/cmip6/Sandeep/NEW/ORIG_SFC_FLUX/OUTPUT/OCN/TRANS/trans_ocean_1850-1919_yrmean.nc" !!! Load your transport file
+
+let euler = ty_trans[d=2]*tmask_atl
+
+let amoc_mean  = euler[i=@sum,k=@rsum] - euler[i=@sum,k=@sum]
+
+sp rm atlantic_moc_transport_CTRL.nc
+save/format=cdf/file=atlantic_moc_transport_CTRL.nc/nohead amoc_mean
+
