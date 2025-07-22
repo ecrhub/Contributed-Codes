@@ -1,5 +1,5 @@
 ; ============================================================================================
- ;===To find Probability Density  Function of Daily Rainfall ===
+ ;===To find diurnal phase and amplitude of rainfall ===
  ;######## Contributed by Dr. Maheswar Pradhan, IITM, Pune #########
 ; ============================================================================================
 fc=addfile("./trmm_data.nc","r")
